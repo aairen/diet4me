@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diet Recommendation</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .diet-container { margin-top: 20px; }
+        .diet-info { margin-top: 20px; }
+        .blue-zone { margin-top: 20px; }
+        .diet-meals { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mt-5">Diet Recommendation</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select class="form-control" id="gender" name="gender" required>
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="race">Race:</label>
+                <select class="form-control" id="race" name="race" required>
+                    <option value="">Select Race</option>
+                    <option value="African American">African American</option>
+                    <option value="Hispanic">Hispanic</option>
+                    <option value="Caucasian">Caucasian</option>
+                    <option value="Native American">Native American</option>
+                    <option value="Asian American">Asian American</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Get Recommended Diets</button>
+        </form>
+
+        {% if diets %}
+        <div class="diet-container">
+            <h2 class="text-center">Recommended Diets</h2>
+            <form method="POST">
+                <input type="hidden" name="gender" value="{{ request.form.get('gender') }}">
+                <input type="hidden" name="race" value="{{ request.form.get('race') }}">
+                <div class="form-group">
+                    <label for="diet">Select Diet:</label>
+                    <select class="form-control" id="diet" name="diet" required>
+                        {% for diet in diets %}
+                            <option value="{{ diet.name }}">{{ diet.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Show Diet Details</button>
+            </form>
+        </div>
+        {% endif %}
+
+        {% if diet %}
+        <div class="diet-info">
+            <h3>{{ diet.name }}</h3>
+            <p><strong>Key Characteristics:</strong> {{ diet.characteristics }}</p>
+            <p><strong>Common Foods:</strong> {{ diet.foods }}</p>
+            <p><strong>Protein (% per Day):</strong> {{ diet.protein_perc }}</p>
+            <p><strong>Fat (% per Day):</strong> {{ diet.fat_perc }}</p>
+            <p><strong>Carbs (% per Day):</strong> {{ diet.carbs_perc }}</p>
+        </div>
+
+        <div class="diet-meals">
+            <h4>Average Meals</h4>
+            <p><strong>Breakfast:</strong> {{ diet_meals.breakfast }}</p>
+            <p><strong>Lunch:</strong> {{ diet_meals.lunch }}</p>
+            <p><strong>Dinner:</strong> {{ diet_meals.dinner }}</p>
+            <p><strong>Snacks:</strong> {{ diet_meals.snacks }}</p>
+        </div>
+
+        <form method="POST" class="blue-zone">
+            <input type="hidden" name="gender" value="{{ request.form.get('gender') }}">
+            <input type="hidden" name="race" value="{{ request.form.get('race') }}">
+            <input type="hidden" name="diet" value="{{ diet.name }}">
+            <button type="submit" name="blue_zone" class="btn btn-success">Blue Zone-ify</button>
+        </form>
+
+        {% if blue_zone %}
+        <div class="diet-info mt-3">
+            <h4>Retained Characteristics</h4>
+            <p>{{ diet.retained_char }}</p>
+
+            <h4>Blue Zone Incorporated Characteristics</h4>
+            <p>{{ diet.incorporated_char }}</p>
+        </div>
+        {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>
