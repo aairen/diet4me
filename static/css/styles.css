@@ -1,0 +1,56 @@
+body {
+    background-color: #f8f9fa;
+    font-family: 'Questrial', sans-serif;
+}
+
+h1, h2, h3, h4 {
+    color: #343a40;
+}
+
+.container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #495057;
+}
+
+.btn-primary, .btn-success {
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.diet-container, .diet-info, .diet-meals, .blue-zone {
+    margin-top: 40px;
+    padding: 20px;
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    background-color: #f1f3f5;
+}
+
+.diet-list {
+    font-size: 1.1em;
+    color: #495057;
+    font-weight: bold;
+}
+
+.eliminated-diet {
+    text-decoration: line-through;
+    color: #6c757d;
+    font-weight: normal;
+}

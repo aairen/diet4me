@@ -5,12 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diet Recommendation</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        .diet-container { margin-top: 20px; }
-        .diet-info { margin-top: 20px; }
-        .blue-zone { margin-top: 20px; }
-        .diet-meals { margin-top: 20px; }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
     <div class="container">
@@ -20,27 +16,38 @@
                 <label for="gender">Gender:</label>
                 <select class="form-control" id="gender" name="gender" required>
                     <option value="">Select Gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
+                    <option value="Male" {% if request.form.get('gender') == 'Male' %}selected{% endif %}>Male</option>
+                    <option value="Female" {% if request.form.get('gender') == 'Female' %}selected{% endif %}>Female</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="race">Race:</label>
                 <select class="form-control" id="race" name="race" required>
                     <option value="">Select Race</option>
-                    <option value="African American">African American</option>
-                    <option value="Hispanic">Hispanic</option>
-                    <option value="Caucasian">Caucasian</option>
-                    <option value="Native American">Native American</option>
-                    <option value="Asian American">Asian American</option>
+                    <option value="African American" {% if request.form.get('race') == 'African American' %}selected{% endif %}>African American</option>
+                    <option value="Hispanic" {% if request.form.get('race') == 'Hispanic' %}selected{% endif %}>Hispanic</option>
+                    <option value="Caucasian" {% if request.form.get('race') == 'Caucasian' %}selected{% endif %}>Caucasian</option>
+                    <option value="Native American" {% if request.form.get('race') == 'Native American' %}selected{% endif %}>Native American</option>
+                    <option value="Asian American" {% if request.form.get('race') == 'Asian American' %}selected{% endif %}>Asian American</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Get Recommended Diets</button>
+            <button type="submit" class="btn btn-primary btn-block">Get Recommended Diets</button>
         </form>
 
         {% if diets %}
         <div class="diet-container">
-            <h2 class="text-center">Recommended Diets</h2>
+            <h2>Recommended Diets</h2>
+            
+            <p class="diet-list">
+                {% for diet in all_diets %}
+                    {% if diet in diets %}
+                        {{ diet.name }}{% if not loop.last %}, {% endif %}
+                    {% else %}
+                        <span class="eliminated-diet">{{ diet.name }}</span>{% if not loop.last %}, {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </p>
+            
             <form method="POST">
                 <input type="hidden" name="gender" value="{{ request.form.get('gender') }}">
                 <input type="hidden" name="race" value="{{ request.form.get('race') }}">
@@ -48,11 +55,11 @@
                     <label for="diet">Select Diet:</label>
                     <select class="form-control" id="diet" name="diet" required>
                         {% for diet in diets %}
-                            <option value="{{ diet.name }}">{{ diet.name }}</option>
+                            <option value="{{ diet.name }}" {% if request.form.get('diet') == diet.name %}selected{% endif %}>{{ diet.name }}</option>
                         {% endfor %}
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary">Show Diet Details</button>
+                <button type="submit" class="btn btn-primary btn-block">Show Diet Details</button>
             </form>
         </div>
         {% endif %}
@@ -79,7 +86,7 @@
             <input type="hidden" name="gender" value="{{ request.form.get('gender') }}">
             <input type="hidden" name="race" value="{{ request.form.get('race') }}">
             <input type="hidden" name="diet" value="{{ diet.name }}">
-            <button type="submit" name="blue_zone" class="btn btn-success">Blue Zone-ify</button>
+            <button type="submit" name="blue_zone" class="btn btn-success btn-block">Blue Zone-ify</button>
         </form>
 
         {% if blue_zone %}

@@ -74,7 +74,7 @@ def index():
         if 'blue_zone' in request.form:
             blue_zone = True
 
-    return render_template('index.html', diets=recommended_diets, diet=selected_diet, diet_meals=diet_meals_selected, blue_zone=blue_zone, selected_diet=selected_diet)
+    return render_template('index.html', all_diets=diets, diets=recommended_diets, diet=selected_diet, diet_meals=diet_meals_selected, blue_zone=blue_zone, selected_diet=selected_diet)
 
 if __name__ == '__main__':
     app.run(debug=True)
