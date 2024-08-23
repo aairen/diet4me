@@ -64,9 +64,22 @@
         </div>
         {% endif %}
 
+        {% if macronutrient_message %}
+        <div class="alert alert-info mt-3">
+            {{ macronutrient_message }}
+        </div>
+        {% endif %}
+
         {% if diet %}
         <div class="diet-info">
-            <h3>{{ diet.name }}</h3>
+            <div class="row">
+                <div class="col">
+                    <h3>{{ diet.name }}</h3>
+                </div>
+                <div class="col text-right">
+                    <a href="{{ diet.source }}" id="source-link" target="_blank" class="btn btn-link">Source</a>
+                </div>
+            </div>
             <p><strong>Key Characteristics:</strong> {{ diet.characteristics }}</p>
             <p><strong>Common Foods:</strong> {{ diet.foods }}</p>
             <p><strong>Protein (% per Day):</strong> {{ diet.protein_perc }}</p>

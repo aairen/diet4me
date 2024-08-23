@@ -19,7 +19,8 @@ def read_diet_csv(file_name):
                 carbs_perc=row['Carbs (%) per Day'],
                 associated_diseases=row['Associated Disease'].split(', '),
                 retained_char=row['Retained Characteristics'],
-                incorporated_char=row['Incorporated Characteristics']
+                incorporated_char=row['Incorporated Characteristics'],
+                source=row['Source']
             ))
     return diets
 
@@ -55,6 +56,7 @@ def index():
     diet_meals_selected = None
     recommended_diets = []
     blue_zone = False
+    macronutrient_message = None
 
     if request.method == 'POST':
         gender = request.form.get('gender')
@@ -71,10 +73,15 @@ def index():
             selected_diet = next((diet for diet in recommended_diets if diet.name == selected_diet_name), None)
             diet_meals_selected = diet_meals.get(selected_diet_name)
 
+            if (selected_diet.protein_perc == 'N/A' or
+                selected_diet.fat_perc == 'N/A' or
+                selected_diet.carbs_perc == 'N/A'):
+                macronutrient_message = "This diet does not require counting macronutrient proportions."
+
         if 'blue_zone' in request.form:
             blue_zone = True
 
-    return render_template('index.html', all_diets=diets, diets=recommended_diets, diet=selected_diet, diet_meals=diet_meals_selected, blue_zone=blue_zone, selected_diet=selected_diet)
+    return render_template('index.html', all_diets=diets, diets=recommended_diets, diet=selected_diet, diet_meals=diet_meals_selected, blue_zone=blue_zone, selected_diet=selected_diet, macronutrient_message=macronutrient_message)
 
 if __name__ == '__main__':
     app.run(debug=True)

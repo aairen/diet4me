@@ -1,5 +1,5 @@
 class Diet:
-    def __init__(self, name, characteristics, foods, protein_perc, fat_perc, carbs_perc, associated_diseases, retained_char, incorporated_char):
+    def __init__(self, name, characteristics, foods, protein_perc, fat_perc, carbs_perc, associated_diseases, retained_char, incorporated_char, source):
         self.name = name
         self.characteristics = characteristics
         self.foods = foods
@@ -9,3 +9,4 @@ class Diet:
         self.associated_diseases = associated_diseases
         self.retained_char = retained_char
         self.incorporated_char = incorporated_char
+        self.source = source
