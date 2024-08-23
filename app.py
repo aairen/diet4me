@@ -38,8 +38,8 @@ def read_diet_meals_csv(file_name):
 
 disease_data = {
     'African American': ['Hypertension', 'Cardiovascular disease', 'Type 2 diabetes', 'Obesity', 'Prostate cancer', 'Breast cancer', 'Neurodegenerative diseases', 'Epilepsy'],
-    'Hispanic': ['Type 2 diabetes', 'Obesity', 'Cervical cancer', 'Liver cancer', 'Stomach cancer', 'Neurodegenerative diseases', 'Epilepsy', 'High cholesterol'],
-    'Caucasian': ['Obesity', 'High cholesterol'],
+    'Hispanic': ['Type 2 diabetes', 'Obesity', 'Cervical cancer', 'Liver cancer', 'Stomach cancer', 'Neurodegenerative diseases', 'Epilepsy'],
+    'Caucasian': ['Obesity'],
     'Native American': ['Type 2 diabetes', 'Kidney cancer', 'Liver cancer', 'Lung and bronchus cancer', 'Cervical cancer', 'Colorectal cancer'],
     'Asian American': ['Type 2 diabetes', 'Stomach cancer', 'Liver cancer'],
 }
@@ -60,6 +60,11 @@ def index():
         race = request.form.get('race')
 
         possible_diseases = disease_data.get(race, [])
+
+        if race == 'Caucasian' and gender == 'Female':
+            possible_diseases.append('High cholesterol')
+        elif race == 'Hispanic' and gender == 'Male':
+            possible_diseases.append('High cholesterol')
 
         recommended_diets = [diet for diet in diets if any(disease in diet.associated_diseases for disease in possible_diseases)]
 
