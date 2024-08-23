@@ -4,7 +4,6 @@ from diet import Diet
 
 app = Flask(__name__)
 
-# Function to read diet data from CSV
 def read_diet_csv(file_name):
     diets = []
     with open(file_name, newline='', encoding='utf-8') as csvfile:
@@ -24,7 +23,6 @@ def read_diet_csv(file_name):
             ))
     return diets
 
-# Function to read diet meals data from CSV
 def read_diet_meals_csv(file_name):
     diet_meals = {}
     with open(file_name, newline='', encoding='utf-8') as csvfile:
@@ -46,7 +44,6 @@ disease_data = {
     'Asian American': ['Type 2 diabetes', 'Stomach cancer', 'Liver cancer'],
 }
 
-# Load diet and diet meals data
 diets = read_diet_csv('diet_database.csv')
 diet_meals = read_diet_meals_csv('diet_meals.csv')
 
@@ -62,10 +59,8 @@ def index():
         gender = request.form.get('gender')
         race = request.form.get('race')
 
-        # Determine diseases based on race
         possible_diseases = disease_data.get(race, [])
 
-        # Filter diets based on associated diseases
         recommended_diets = [diet for diet in diets if any(disease in diet.associated_diseases for disease in possible_diseases)]
 
         if 'diet' in request.form:
